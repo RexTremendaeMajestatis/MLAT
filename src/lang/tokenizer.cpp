@@ -18,7 +18,6 @@ Token Tokenizer::Peek() {
 Token Tokenizer::Next() {
     Token ret = Peek();
     tokens_.pop_front();
-    std::cout << std::visit(TokenStringFunctor(), ret) << std::endl;
     return ret;
 }
 
