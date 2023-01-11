@@ -1,6 +1,7 @@
 #include "object.h"
 #include "tokenizer.h"
 #include "parser.h"
+#include "interpretation.h"
 
 /**
  *  E    ->      E | M      |       M
@@ -98,11 +99,11 @@ ObjectPointer Parser::ParseAtom(Tokenizer* tok) {
         auto symbol = std::get<SymbolToken>(Next(tok));
 
         if (symbol.name == "T") {
-            return std::make_shared<Constant>(true);
+            return Interpretation::True;
         }
 
         if (symbol.name == "F") {
-            return std::make_shared<Constant>(false);
+            return Interpretation::False;
         }
 
         return std::make_shared<Variable>(symbol.name);

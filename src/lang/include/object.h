@@ -6,6 +6,7 @@
 #include <string>
 #include <sstream>
 
+class Interpretation;
 
 class Object : public std::enable_shared_from_this<Object> {
 public:
@@ -15,6 +16,9 @@ public:
     }
     virtual std::shared_ptr<Object> Simplify() {
         throw RuntimeError("Simplify not implemented");
+    }
+    virtual std::shared_ptr<Object> Eval(Interpretation* i) {
+        throw RuntimeError("Eval not implemented");
     }
 };
 
@@ -45,6 +49,8 @@ struct Variable : public Object {
 
     ObjectPointer Simplify() override;
 
+    ObjectPointer Eval(Interpretation* i) override;
+
     std::string name_;
 };
 
@@ -55,6 +61,8 @@ struct Constant : public Object {
     std::string DebugPrint() override;
 
     ObjectPointer Simplify() override;
+
+    ObjectPointer Eval(Interpretation* i) override;
 
     bool value_;
 };
@@ -67,6 +75,8 @@ struct Conjunction : public Object {
     std::string DebugPrint() override;
 
     ObjectPointer Simplify() override;
+
+    ObjectPointer Eval(Interpretation* i) override;
 
     ObjectPointer left_;
     ObjectPointer right_;
@@ -81,6 +91,8 @@ struct Disjunction : public Object {
 
     ObjectPointer Simplify() override;
 
+    ObjectPointer Eval(Interpretation* i) override;
+
     ObjectPointer left_;
     ObjectPointer right_;
 };
@@ -92,6 +104,8 @@ struct Negation : public Object {
     std::string DebugPrint() override;
 
     ObjectPointer Simplify() override;
+
+    ObjectPointer Eval(Interpretation* i) override;
 
     ObjectPointer expr_;
 };

@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 #include "tokenizer.h"
 #include "parser.h"
+#include "interpretation.h"
 #include "error.h"
 
 TEST(TokenizerTests, Empty)
@@ -221,4 +222,27 @@ TEST(ParserTests, CorrectSyntaxEx9)
     Tokenizer tokenizer{&ss};
 
     ASSERT_NO_THROW(Parser parser{&tokenizer});
+}
+
+TEST(EvalTests, Test1)
+{
+    auto i = Interpretation();
+    i.Define("a", Interpretation::False);
+
+    std::stringstream ss{"a & !a"};
+    Tokenizer tokenizer{&ss};
+    Parser parser{&tokenizer};
+    ASSERT_FALSE(parser.GetTree()->Eval(&i) == Interpretation::True);
+    ASSERT_TRUE(parser.GetTree()->Eval(&i) == Interpretation::False);
+}
+
+TEST(EvalTests, Test2)
+{
+    auto i = Interpretation();
+
+    std::stringstream ss{"T & F"};
+    Tokenizer tokenizer{&ss};
+    Parser parser{&tokenizer};
+    ASSERT_FALSE(parser.GetTree()->Eval(&i) == Interpretation::True);
+    ASSERT_TRUE(parser.GetTree()->Eval(&i) == Interpretation::False);
 }
