@@ -7,7 +7,7 @@
 ObjectPointer Interpretation::True = std::make_shared<Constant>(true);
 ObjectPointer Interpretation::False = std::make_shared<Constant>(false);
 
-bool Interpretation::Define(std::string var, std::shared_ptr<Object> val) {
+bool Interpretation::Define(std::string var, ObjectPointer val) {
     if (variables_.find(var) == variables_.end()) {
         variables_[var] = val;
         return true;
@@ -16,7 +16,7 @@ bool Interpretation::Define(std::string var, std::shared_ptr<Object> val) {
     return false;
 }
 
-bool Interpretation::Set(std::string var, std::shared_ptr<Object> val) {
+bool Interpretation::Set(std::string var, ObjectPointer val) {
     if (variables_.find(var) != variables_.end()) {
         variables_[var] = val;
         return true;
@@ -25,7 +25,7 @@ bool Interpretation::Set(std::string var, std::shared_ptr<Object> val) {
     return false;
 }
 
-std::shared_ptr<Object> Interpretation::Get(std::string var) {
+ObjectPointer Interpretation::Get(std::string var) {
     if (variables_.find(var) != variables_.end()) {
         return variables_[var];
     }
