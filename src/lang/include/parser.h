@@ -6,7 +6,7 @@
 /**
  *  E    ->      E | M      |       M
  *  M    ->      M & A      |       A
- *  A    ->       (E)       |   <Negation>
+ *  A    ->       !A        |      (E)
  *
  *  E - Object
  *  M - Monome
